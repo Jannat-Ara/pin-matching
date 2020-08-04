@@ -12,47 +12,117 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="pin-generator half-width">
-                    <input class="form-control" type="text">
-                    <button class="generate-btn">Generate Pin</button>
+                    <input id="form-control" class="form-control" type="text">
+                    <button  id="generate-btn"class="generate-btn">Generate Pin</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input class="form-control" type="text">
+                    <input id= "output" class="form-control" type="text">
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
-                              <div class="button">7</div>
-                              <div class="button">8</div>
-                              <div class="button">9</div>
+                              <div  class="button ">7</div>
+                              <div  class="button ">8</div>
+                              <div class="button ">9</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">4</div>
-                              <div class="button">5</div>
-                              <div class="button">6</div>
+                              <div class="button ">4</div>
+                              <div  class="button ">5</div>
+                              <div  class="button ">6</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">1</div>
-                              <div class="button">2</div>
-                              <div class="button">3</div>
+                              <div  class="button ">1</div>
+                              <div  class="button ">2</div>
+                              <div class="button ">3</div>
                             </div>
                             <div class="calc-button-row">
                                 <div class="button"><</div>
-                                <div class="button">0</div>
+                                <div class="button ">0</div>
                                 <div class="button">C</div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
-                                <p class="action-left">3 try left</p>
+                                <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
+                                <p class="action-left"> <span id ="action-left"> 3 </span>try left</p>
                             </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="notify-section">
-            <p class="notify">❌ Pin Didn't Match, Please try again</p>
-            <p class="notify">✅ Pin Matched... Secret door is opening for you</p>
+            <p id="notify1" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p  id="notify2" class="notify">✅ Pin Matched... Secret door is opening for you</p>
         </div>
     </div>
+    <script>
+       const generateButton= document.getElementById("generate-btn");
+       generateButton.addEventListener("click",function(){
+           const randomNumber = Math.floor(Math.random() * 10000) + 1;
+           if(randomNumber>1000){
+           document.getElementById("form-control").value= randomNumber;
+           
+           }
+            const notifying1 = document.getElementById("notify1");
+            notifying1.style.display ="none";
+            const notifying2 = document.getElementById("notify2");
+             notifying2.style.display ="none";
+           
+         })
+        
+        var number = document.getElementsByClassName("button");
+        for(var i =0;i<number.length;i++){
+	        number[i].addEventListener('click',function(){  
+                let value1 = this.innerHTML;
+                if(value1.localeCompare("C")==0){
+                    let output =document.getElementById("output").value;
+                    output ="";
+                    document.getElementById("output").value =output;
+
+                }
+                else if( value1.localeCompare("&lt;")==0){
+                   let output = document.getElementById("output").value;
+                   document.getElementById("output").value = output.substr(0, output.length-1);
+                }
+                else{
+                    
+                let output =document.getElementById("output").value;
+                    output = output + value1;
+                    document.getElementById("output").value =output;
+                }
+            })
+            }
+            
+            var count=0;    
+                
+            const submitButton = document.getElementById("submit-btn");
+            submitButton.addEventListener("click",function(){
+                if(document.getElementById("form-control").value !="" && document.getElementById("output").value!=""){
+                if(document.getElementById("output").value == document.getElementById("form-control").value ){
+                    const notifying = document.getElementById("notify2");
+                    notifying.style.display ="inline";
+                }
+                else{
+                    const notifying = document.getElementById("notify1");
+                    notifying.style.display ="inline";
+                    
+                    count =count+1;
+                    if(count==1){
+                        document.getElementById("action-left").innerText ="2 ";
+                    }
+                    else if(count== 2)
+                    {
+                        document.getElementById("action-left").innerText ="1 ";
+                    }
+                    else
+                    {
+                        document.getElementById("action-left").innerText ="0 ";
+                    }
+
+                }
+                }
+
+            })
+        
+    </script>
 </body>
 </html>
